@@ -12,6 +12,8 @@ service Auth {
   rpc Ping(google.protobuf.Empty) returns (PingResponse) {}
 }
 
+message Empty {}
+
 message RegisterRequest {
   string email = 1;
   string password = 2;
