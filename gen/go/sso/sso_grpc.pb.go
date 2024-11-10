@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -31,7 +30,7 @@ const (
 type AuthClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	Ping(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PingResponse, error)
+	Ping(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*PingResponse, error)
 }
 
 type authClient struct {
@@ -62,7 +61,7 @@ func (c *authClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *authClient) Ping(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PingResponse, error) {
+func (c *authClient) Ping(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*PingResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PingResponse)
 	err := c.cc.Invoke(ctx, Auth_Ping_FullMethodName, in, out, cOpts...)
@@ -78,7 +77,7 @@ func (c *authClient) Ping(ctx context.Context, in *emptypb.Empty, opts ...grpc.C
 type AuthServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	Ping(context.Context, *emptypb.Empty) (*PingResponse, error)
+	Ping(context.Context, *Empty) (*PingResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -95,7 +94,7 @@ func (UnimplementedAuthServer) Register(context.Context, *RegisterRequest) (*Reg
 func (UnimplementedAuthServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServer) Ping(context.Context, *emptypb.Empty) (*PingResponse, error) {
+func (UnimplementedAuthServer) Ping(context.Context, *Empty) (*PingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
@@ -156,7 +155,7 @@ func _Auth_Login_Handler(srv interface{}, ctx context.Context, dec func(interfac
 }
 
 func _Auth_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,7 +167,7 @@ func _Auth_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface
 		FullMethod: Auth_Ping_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).Ping(ctx, req.(*emptypb.Empty))
+		return srv.(AuthServer).Ping(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
