@@ -4,9 +4,12 @@ package auth;
 
 option go_package = "dromix.sso.v1.ssov1";
 
+import "google/protobuf/empty.proto";
+
 service Auth {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}
   rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Ping(google.protobuf.Empty) returns (PingResponse) {}
 }
 
 message RegisterRequest {
@@ -26,4 +29,8 @@ message LoginRequest {
 
 message LoginResponse {
   string token = 1;
+}
+
+message PingResponse {
+  string message = 1;
 }
